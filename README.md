@@ -38,7 +38,7 @@ A web-based movie ticket booking system built with Django. This system allows us
 - **Virtual Environment:** Python venv
 
 ---
-
+```markdown
 ## ⚙️ Project Setup Instructions
 
 ### 1️⃣ Clone the Repository
@@ -46,3 +46,48 @@ A web-based movie ticket booking system built with Django. This system allows us
 ```bash
 git clone https://github.com/RajashekaraRedddy/Movie-Ticket-Booking-System.git
 cd Movie-Ticket-Booking-System
+
+2️⃣ Create Virtual Environment
+```bash
+python -m venv env
+env\Scripts\activate  # For Windows
+# OR
+source env/bin/activate  # For Linux/macOS
+
+3️⃣ Install Django
+```bash
+pip install django
+
+4️⃣ Install Dependencies (if available)
+```bash
+pip install -r requirements.txt
+
+5️⃣ MySQL Setup
+Install MySQL Server.
+Create a new database (e.g., movie_db).
+Update the DATABASES section in movie_ticket_booking/settings.py
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'movie_db',
+        'USER': 'your_mysql_username',
+        'PASSWORD': 'your_mysql_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+}
+
+6️⃣ Run Migrations
+```bash
+python manage.py makemigrations
+python manage.py migrate
+
+7️⃣ Create Superuser
+```bash
+python manage.py createsuperuser
+
+8️⃣ Run the Development Server
+```bash
+python manage.py runserver
+
