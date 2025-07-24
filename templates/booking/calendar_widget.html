@@ -1,0 +1,53 @@
+<div class="calendar">
+    {% for day in week %}
+        <a href="{% url 'theater_showtime_date' slug=slug date_str=day.date|date:'Y-m-d' %}">
+            <div class="day {% if day.date == today %}today{% endif %}">
+                <span>{{ day.name }}</span><br>
+                <span>{{ day.day }}</span><br>
+                <span>{{ day.month }}</span>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+
+{% block style %}
+<style>
+    .calendar {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 20px;
+        background-color: #f8f8f8;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        height: 140px;
+        width: 100%;
+        flex-wrap: wrap;
+        text-decoration: none;
+    }
+
+    .day {
+        flex: 1;
+        background-color: white;
+        border: 1px solid #ddd;
+        padding: 15px;
+        text-align: center;
+        border-radius: 10px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        
+    }
+
+    .day:hover {
+        background-color: #f0f0f0;
+        transform: translate(-3px);
+        text-decoration: none;
+    }
+
+    .day.today {
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+</style>
+{% endblock %}

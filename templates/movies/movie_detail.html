@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ movie.title }}{% endblock %}
+
+{% block header %}
+    <center><h1>{{ movie.title }}</h1></center>
+{% endblock %}
+
+{% block content %}
+<div class="movie-detail-container">
+    <div class="movie-image">
+        <img src="{{ movie.movie_image.url }}" alt="{{ movie.title }}">
+    </div>
+    <div class="movie-info">
+       
+
+        {% if movie.synopsis %}
+            <p><strong>Synopsis:</strong> {{ movie.synopsis }}</p>
+        {% endif %}
+
+        {% if movie.language %}
+            <p><strong>Language:</strong> {{ movie.language }}</p>
+        {% endif %}
+
+        <p><strong>Genre: </strong> {{ movie.genre }}</p> 
+        
+        {% if rating %}
+            <p><strong>Average Rating:</strong> {{ rating|floatformat:1 }} / 5</p>
+            <p><strong>Rated by:</strong> {{ no_users }} user{{ no_users|pluralize }}</p>
+        {% else %}
+            <p>No ratings yet.</p>
+        {% endif %}
+
+        <div class="book-ticket">
+        <a class="book-ticket" href="{% url 'show_time' movie.slug %}"><button class="book-ticket">BOOK TICKET</button></a>
+        </div> 
+        
+        {% if reviews %}
+            <h3>User Reviews:</h3> 
+            <ul>
+                {% for r in reviews %} 
+                    <li>
+                        <strong>{{ r.user.username }}:</strong> {{ r.comment }} (Rating: {{ r.rating }})
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_head %}
+<style>
+    .movie-detail-container { 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        text-align: center;
+    }
+
+    .movie-image img {
+        max-width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        margin-left: 100px;
+    }
+
+    .movie-image img:hover{
+        transform: scale(1.05);
+    }
+
+    .movie-info h2 {
+        color: #333;
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .movie-info p {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 1rem;
+    }
+
+    li {
+        background: black;
+        color: white;
+        margin-bottom: 0.5rem;
+        padding: 10px;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    .book-ticket {
+        height: 35px;
+        width: 120px;
+        background-color: aqua;
+        color: black;
+        border-radius: 5%;
+    }
+
+    .book-ticket:hover{
+        transform: scale(1.05);
+    }
+
+    @media (min-width: 768px) {
+        .movie-detail-container {
+            flex-direction: row;
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        .movie-image, .movie-info {
+            flex: 1;
+        }
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% providers_media_js %}
+{% load crispy_forms_tags %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<style>
+    .butt{
+        background-color: rgb(65, 86, 210);
+        color: rgb(252, 248, 248);
+        padding: 8px 10px;
+    }
+    .butt:hover{
+        background-color: rgb(16, 16, 192); 
+    }
+</style>    
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form |crispy}}
+    <input type="submit" value="Register" class="butt">
+    <a href="{% provider_login_url  'google' %}">Google</a>
+    
+</form>
+
+{% endblock %} 

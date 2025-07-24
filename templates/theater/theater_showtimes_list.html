@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 0;
+}
+
+.showtimes-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.theater-box {
+  padding: 1.5rem;
+  border-bottom: 2px solid #f1f1f1;
+  margin-bottom: 1.5rem;
+}
+
+.theater-box:last-child {
+  border-bottom: none;
+}
+
+.theater-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 0.5rem;
+}
+
+.theater-address {
+  font-size: 1rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+.showtime {
+  display: inline-block;
+  margin: 0.5rem 1rem 0.5rem 0;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  background-color: #28a745;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.showtime:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+.showtime:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(40, 167, 69, 0.5);
+}
+
+.movie-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ff3700;
+  margin-bottom: 0.5rem;
+}
+</style>
+
+{% include 'booking/calendar_widget.html' with slug=slug %}
+
+<div class="showtimes-container">
+  {% for showtime_list in theater_showtimes %}
+      {% if showtime_list %}
+          <div class="theater-box">
+              <h3 class="theater-name">Theater: {{ showtime_list.0.theater.name }}</h3>
+               <p class="theater-address">{{ showtime_list.0.theater.address }}</p>
+               <p class="movie-title">Movie: {{ showtime_list.0.movie.title }}</p>
+              {% for show in showtime_list %}
+              <a href="{% url 'seat_selection' show.id %}" class="showtime" aria-label="Showtime at {{ show.show_time|date:'h:i A' }}">
+                {{ show.show_time|date:"M d, Y - h:i A" }}
+              </a>            
+              {% endfor %}
+          </div>
+      {% endif %}
+  {% empty %}
+      <p>No showtimes available for this movie on this date.</p> 
+  {% endfor %}
+</div>
+
+{% endblock %}
